@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para July ❤️</title>
+    <style>
+        :root {
+            --rosa: #ff69b4;
+            --marron-papel: #d2b48c;
+            --marron-oscuro: #5d4037;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: radial-gradient(circle, #1a1a1a 0%, #000000 100%);
+            background-attachment: fixed;
+            font-family: 'Arial', sans-serif;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Fondo decorado */
+        .decoracion-fondo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .item { position: absolute; opacity: 0.5; color: var(--rosa); }
+
+        .te-amo-july {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            font-family: 'Brush Script MT', cursive;
+            color: var(--rosa);
+            font-size: 28px;
+            z-index: 10;
+            text-shadow: 0 0 10px var(--rosa);
+        }
+
+        .hockey-corner {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            font-size: 35px;
+            z-index: 10;
+        }
+
+        /* Pantallas */
+        .screen {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+            z-index: 5;
+            position: relative;
+        }
+
+        .active { display: flex; }
+
+        .btn-principal {
+            padding: 20px 50px;
+            font-size: 28px;
+            background-color: var(--rosa);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 0 25px var(--rosa);
+            transition: 0.3s;
+        }
+
+        /* Grid de Botones */
+        .grid-cartas {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .btn-frase {
+            aspect-ratio: 1/1;
+            border: 3px solid var(--rosa);
+            border-radius: 15px;
+            background-size: cover;
+            background-position: center;
+            background-color: #222;
+            cursor: pointer;
+            color: white;
+            text-shadow: 2px 2px 4px black;
+            font-weight: bold;
+            font-size: 14px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding-bottom: 10px;
+        }
+
+        .btn-frase:disabled {
+            filter: grayscale(1) brightness(0.4);
+            cursor: not-allowed;
+        }
+
+        /* Hoja A4 Vertical */
+        .papel {
+            background-color: var(--marron-papel);
+            background-image: url('https://www.transparenttextures.com/patterns/papyros.png');
+            color: #3e2723;
+            padding: 40px 30px;
+            width: 280px;
+            min-height: 400px;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.4), 10px 10px 20px rgba(0,0,0,0.5);
+            border: 1px solid #bda07e;
+            clip-path: polygon(2% 1%, 98% 0%, 100% 3%, 99% 97%, 97% 100%, 3% 99%, 0% 97%, 1% 4%);
+            text-align: center;
+            line-height: 1.8;
+            font-family: 'Georgia', serif;
+            font-style: italic;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .btn-volver {
+            padding: 12px 25px;
+            background: var(--marron-oscuro);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="decoracion-fondo" id="fondo-decor"></div>
+    <div class="te-amo-july">te amo july</div>
+    <div class="hockey-corner">🏑✨</div>
+
+    <section id="inicio" class="screen active">
+        <button class="btn-principal" onclick="irA('menu')">presioname</button>
+    </section>
+
+    <section id="menu" class="screen">
+        <h2 style="color: var(--rosa);">Frases para vos</h2>
+        <div class="grid-cartas" id="contenedor-botones"></div>
+        <button class="btn-volver" onclick="irA('inicio')">Regresar</button>
+    </section>
+
+    <section id="carta-view" class="screen">
+        <div class="papel">
+            <div style="font-size: 24px; margin-bottom: 20px;">🌸🌷🌸</div>
+            <div id="texto-carta"></div>
+            <div style="font-size: 24px; margin-top: 20px;">🌸🌷🌸</div>
+        </div>
+        <button class="btn-volver" onclick="irA('menu')" style="background: var(--rosa);">Volver</button>
+    </section>
+
+    <script>
+        const frases = [
+            { fecha: '2026-05-14', titulo: 'Frase del día 14/05', img: 'foto1.jpg', texto: 'No importa lo que pase en el día, saber que estás conmigo lo hace mejor. Te amo, July.' },
+            { fecha: '2026-05-15', titulo: 'Frase del día 15/05', img: 'foto2.jpg', texto: 'Sos mi persona favorita y el lugar donde siempre quiero estar.' },
+            { fecha: '2026-05-16', titulo: 'Frase del día 16/05', img: 'foto3.jpg', texto: 'Cada vez que te veo, me doy cuenta de que sos todo lo que está bien.' },
+            { fecha: '2026-05-17', titulo: 'Frase del día 17/05', img: 'foto4.jpg', texto: 'Gracias por hacerme tan feliz con solo una sonrisa tuya.' },
+            { fecha: '2026-05-18', titulo: 'Frase del día 18/05', img: 'foto6.jpg', texto: 'En un mundo lleno de caos, vos sos mi momento de paz.' },
+            { fecha: '2026-05-19', titulo: 'Frase del día 19/05', img: 'foto5.jpg', texto: 'Te elijo hoy, mañana y siempre. Sos única, July.' }
+        ];
+
+        function inicializarMenu() {
+            const contenedor = document.getElementById('contenedor-botones');
+            const hoy = new Date();
+            hoy.setHours(0,0,0,0);
+
+            frases.forEach(item => {
+                const partes = item.fecha.split('-');
+                const fechaF = new Date(partes[0], partes[1]-1, partes[2]);
+                
+                const btn = document.createElement('button');
+                btn.className = 'btn-frase';
+                btn.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${item.img})`;
+                btn.innerHTML = `<span>${item.titulo}</span>`;
+                
+                if (hoy < fechaF) {
+                    btn.disabled = true;
+                }
+
+                btn.onclick = () => {
+                    document.getElementById('texto-carta').innerText = item.texto;
+                    irA('carta-view');
+                };
+                contenedor.appendChild(btn);
+            });
+        }
+
+        function irA(id) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+        }
+
+        function crearFondo() {
+            const fondo = document.getElementById('fondo-decor');
+            const elementos = ['❤️', '🌸', '🍃', 'Te amo', '🏑', '✨'];
+            for (let i = 0; i < 35; i++) {
+                const div = document.createElement('div');
+                div.className = 'item';
+                div.innerText = elementos[Math.floor(Math.random() * elementos.length)];
+                div.style.left = Math.random() * 100 + 'vw';
+                div.style.top = Math.random() * 100 + 'vh';
+                div.style.fontSize = (Math.random() * 20 + 10) + 'px';
+                fondo.appendChild(div);
+            }
+        }
+
+        crearFondo();
+        inicializarMenu();
+    </script>
+</body>
+</html>
